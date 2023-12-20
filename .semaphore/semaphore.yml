@@ -10,7 +10,7 @@ blocks:
       jobs:
         - name: Build
           commands:
-            - 'docker build --platform linux/arm64 --no-cache --progress=plain -t ${NEXT_IMAGE} -t ${LATEST_IMAGE} -f Dockerfile . --push'
+            - 'docker buildx build --platform linux/arm64 --no-cache --progress=plain -t ${NEXT_IMAGE} -t ${LATEST_IMAGE} -f Dockerfile . --push'
       secrets:
         - name: semaphore-aws
       env_vars:
@@ -21,6 +21,8 @@ blocks:
       prologue:
         commands:
           - checkout
+          - docker buildx install
+          - docker buildx create --use
           - 'export NEXT_IMAGE="${ECR_URI}:${SEMAPHORE_GIT_SHA:0:7}"'
           - 'export LATEST_IMAGE="${ECR_URI}:latest"'
           - source install_aws_cli.sh
