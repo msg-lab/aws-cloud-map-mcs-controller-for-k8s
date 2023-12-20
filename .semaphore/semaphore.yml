@@ -19,7 +19,8 @@ blocks:
       prologue:
         commands:
           - checkout
-          - source install_aws_cli.sh
-          - source semaphore_ecr_login.sh
+          - 'export SEMAPHORE_ECR_REGISTRY="${SEMAPHORE_AWS_ACCOUNT_ID}.dkr.ecr.${SEMAPHORE_AWS_DEFAULT_REGION}.amazonaws.com"'
           - 'export NEXT_IMAGE="${ECR_URI}:${SEMAPHORE_GIT_SHA:0:7}"'
           - 'export LATEST_IMAGE="${ECR_URI}:latest"'
+          - source install_aws_cli.sh
+          - source semaphore_ecr_login.sh
