@@ -10,7 +10,7 @@ blocks:
       jobs:
         - name: Build
           commands:
-            - 'docker build --platform linux/arm64 --no-cache --progress=plain --platform linux/arm64 -t ${NEXT_IMAGE} -t ${LATEST_IMAGE} -f Dockerfile . --push'
+            - 'docker build --platform linux/arm64 --no-cache --progress=plain -t ${NEXT_IMAGE} -t ${LATEST_IMAGE} -f Dockerfile . --push'
       secrets:
         - name: semaphore-aws
       env_vars:
