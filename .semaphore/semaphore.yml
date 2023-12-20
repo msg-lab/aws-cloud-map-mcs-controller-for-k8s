@@ -16,6 +16,8 @@ blocks:
       env_vars:
         - name: ECR_URI
           value: 564387494321.dkr.ecr.ap-southeast-1.amazonaws.com/aws-cloud-map-mcs-controller-for-k8s
+        - name: SEMAPHORE_AWS_DEFAULT_REGION
+          value: ap-southeast-1
       prologue:
         commands:
           - checkout
