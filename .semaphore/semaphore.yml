@@ -16,12 +16,11 @@ blocks:
       env_vars:
         - name: ECR_URI
           value: 564387494321.dkr.ecr.ap-southeast-1.amazonaws.com/aws-cloud-map-mcs-controller-for-k8s
-        - name: SEMAPHORE_AWS_DEFAULT_REGION
-          value: ap-southeast-1
+        - name: SEMAPHORE_ECR_REGISTRY
+          value: 564387494321.dkr.ecr.ap-southeast-1.amazonaws.com
       prologue:
         commands:
           - checkout
-          - 'export SEMAPHORE_ECR_REGISTRY="${SEMAPHORE_AWS_ACCOUNT_ID}.dkr.ecr.${SEMAPHORE_AWS_DEFAULT_REGION}.amazonaws.com"'
           - 'export NEXT_IMAGE="${ECR_URI}:${SEMAPHORE_GIT_SHA:0:7}"'
           - 'export LATEST_IMAGE="${ECR_URI}:latest"'
           - source install_aws_cli.sh
