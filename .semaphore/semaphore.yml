@@ -1,0 +1,25 @@
+version: v1.0
+name: Docker
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu2004
+blocks:
+  - name: Build
+    task:
+      jobs:
+        - name: Build
+          commands:
+            - 'docker build --platform linux/arm64 --no-cache --progress=plain --platform linux/arm64 -t ${NEXT_IMAGE} -t ${LATEST_IMAGE} -f Dockerfile . --push'
+      secrets:
+        - name: semaphore-aws
+      env_vars:
+        - name: ECR_URI
+          value: 564387494321.dkr.ecr.ap-southeast-1.amazonaws.com/aws-cloud-map-mcs-controller-for-k8s
+      prologue:
+        commands:
+          - checkout
+          - source install_aws_cli.sh
+          - source semaphore_ecr_login.sh
+          - 'export NEXT_IMAGE="${ECR_URI}:${SEMAPHORE_GIT_SHA:0:7}"'
+          - 'export LATEST_IMAGE="${ECR_URI}:latest"'
